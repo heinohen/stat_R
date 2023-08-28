@@ -1,3 +1,6 @@
+
+#--------------------------------------------------------------------------------
+
 #Suppose that if a signal having intensity μ originates at location A, 
 #then the intensity recorded at location B is normally distributed with mean μ 
 #and standard deviation 3. That is, due to “noise,” 
@@ -17,14 +20,17 @@ lowerbound <- sample_mean-qnorm(0.975)*(3/sqrt(length(results)))
 upperbound <- sample_mean+qnorm(0.975)*(3/sqrt(length(results)))
 lowerbound
 upperbound
+
 # Z = √n*(XBAR-μ/σ) has a standard normal distribution. Now, since z0.025 = 1.96,
 #it follows that 95 percent of the time the absolute value of Z is less than or equal to 1.96 (see Fig. 8.1)#
 #99
+
 lowerbound_ninetynine <- sample_mean-qnorm(0.995)*(3/sqrt(length(results)))
 upperbound_ninetynine <- sample_mean+qnorm(0.995)*(3/sqrt(length(results)))
 lowerbound_ninetynine
 upperbound_ninetynine
 
+#--------------------------------------------------------------------------------
 
 #From past experience it is known that the weights of salmon grown at a commercial hatchery 
 #are normal with a mean that varies from season to season 
@@ -40,6 +46,8 @@ salmon_samplesize
 salmon_samplesize <- ((2*qnorm(1-(0.01/2))*0.3)/0.2)^2
 salmon_samplesize
 
+#--------------------------------------------------------------------------------
+
 #Suppose in ^^^^^^^ that we want to specify a value that, 
 #with 95 percent confidence, is less than the average weight of a salmon. 
 #If a sample of 50 salmon yields an average weight of 5.6 pounds, 
@@ -53,6 +61,8 @@ sample_mean50 <-  5.6
 #lower mean > XBAR - Z_alpha*sigma/sqrt(n)
 salmon50lower <- sample_mean50 - Z_0.05*(salmonSD/sqrt(sample_size50))
 round(salmon50lower,digits = 4)
+
+#--------------------------------------------------------------------------------
 
 #To estimate μ, the average nicotine content of a newly marketed cigarette, 
 #44 of these cigarettes are randomly chosen, 
@@ -84,6 +94,7 @@ cigssize95
 cigs_upper95 <- cigs_mean + qnorm(0.95)*(0.7/sqrt(cigs_samplesize))
 cigs_upper95
 
+#--------------------------------------------------------------------------------
 
 # T-Test
 
@@ -93,6 +104,7 @@ cigs_upper95
 
 #XBAR +/- t_n-1,alpha/2*S/sqrt(n)
 
+#--------------------------------------------------------------------------------
 
 #The Environmental Protection Agency (EPA) is concerned about the amounts of PCB, 
 #a toxic chemical, in the milk of nursing mothers. 
