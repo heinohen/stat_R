@@ -99,6 +99,72 @@ signal_h_zero_not_rejected <- 1- signal_total_prob # ~0.8547
 # that the 0.05 significance level test will not reject the null hypothesis that
 # the signal value is equal to 10.
 
+#--------------------------------------------------------------------------------
+
+# ONE SIDED TESTS
+
+# All cigarettes presently being sold have an average nicotine content of at
+# least 1.5 milligrams per cigarette. A firm that produces cigarettes claims that
+# it has discovered a new technique for curing tobacco leaves that results in
+# an average nicotine content of a cigarette of less than 1.5 milligrams. To
+# test this claim, a sample of 20 of the firm’s cigarettes was analyzed. If it
+# were known that the standard deviation of a cigarette’s nicotine content
+# was 0.7 milligrams, what conclusions could be drawn, at the 5 percent level
+# of significance, if the average nicotine content of these 20 cigarettes were
+# 1.42 milligrams?
+
+# THIS IS V
+
+V_n <- 20
+V_SD <- 0.7
+V_alpha <- 1 - 0.95
+V_Xbar <- 1.42
+V_negalpha <- (-1)*(1-0.95)
+
+# Actul nicotine >= 1.5mg
+V_h_zero_cig <- 1.5
+# Claim nicotine < 1.5mg
+
+# TEST STATISTIC sqrt(n)* XBAR-MU_0 / sigma
+V_test_statistic <- sqrt(V_n) * (V_Xbar - V_h_zero_cig)/V_SD
+V_p_value <- pnorm(V_test_statistic)
+
+#REJECT H_0 if TS <= -Z_alpha
+V_rejected <- V_p_value <= V_alpha
+
+# Since the p value exceeds 0.05, the foregoing data do not enable us to re-
+# ject the null hypothesis and conclude that the mean content per cigarette
+# is less than 1.5 milligrams
+
+#--------------------------------------------------------------------------------
+
+# THE t TEST FOR THE MEAN OF A NORMAL POPULATION: CASE OF UNKNOWN VARIANCE
+
+# Among a clinic’s patients having high blood cholesterol levels of at least 240 milliliters per deciliter 
+# of blood serum, volunteers were recruited to test
+# a new drug designed to reduce blood cholesterol. A group of 40 volunteers
+# were given the drug for 60 days, and the changes in their blood cholesterol
+# levels were noted. If the average change was a decrease of 6.8 with a sample
+# standard deviation of 12.1, what conclusions can we draw? Use the 5 percent level of significance.
+
+# blood_chol_h_0 == 0
+blood_h_zero <- 0
+blood_sample_size <- 40 #A group of 40 volunteers
+blood_sample_mean <- 6.8
+blood_sample_SD <- 12.1
+blood_alpha <- 1-0.95 #95%
+
+#TEST STATISTIC ===>  T = sqrt(n)*(XBAR - mu) / S
+
+blood_test_statistic <- sqrt(blood_sample_size)*blood_sample_mean / blood_sample_SD # 3.554
+
+# TABLE D.2 t_(n-1),(alpha/2) == t_(40-1),(0.05/2) == t_39,0.025
+
+
+
+
+
+
 
 
 
