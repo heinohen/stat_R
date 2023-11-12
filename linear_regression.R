@@ -86,11 +86,134 @@ predict(worker.regression, newdata = hours_28) # prediction args: linear model m
 # sqrt( ((n-2)*S_xx) / SS_R) * beta_hat
 # has a t distribution with n - 2 degrees of freedom
 
+# A significance-level-gamma test oh H_0 is to
+#
+# REJECT H_0: abs(TS) >= t_{n-2,gamma/2}
+# Not reject: otherwise
+# WHERE:
+# TS = sqrt( ((n-2)*S_xx) / SS_r ) * beta_hat
+
+# p-value = 2P( T_(n-2 >= abs(v)))
+
+## EX
+# An individual claims that the fuel consumption of his automobile does not depend
+#on how fast the car is driven. To test the plausibility of this hypothesis,
+# the car was tested at various speeds between 45 and 75 miles per hour.
+# The miles per gallon attained at each of these speeds were determined,
+# with the following data resulting.
+
+car_consumption.data <- data.frame(
+  speed = c(45,50,55,60,65,70,75),
+  mpg = c(24.2,25.0,23.3,22.0,21.5,20.6,19.8))
+plot(car_consumption.data$speed, car_consumption.data$mpg)
+cc_model <- lm(mpg ~ speed, data = car_consumption.data)
+summary(cc_model)
+abline(cc_model, col = "blue")
+
+cars_n <- length(car_consumption.data$speed)
+cars_x_bar <- mean(car_consumption.data$speed)
+cars_y_bar <- mean(car_consumption.data$mpg)
+
+#(x-x_bar)
+cars_x_simple <- lapply(car_consumption.data$speed, function(x) (x - cars_x_bar))
+#(x-x_bar)^2
+cars_x_squared <- lapply(cars_x_simple, function(x) (x)^2)
+#(y-y_bar)
+cars_y_simple <- lapply(car_consumption.data$mpg, function(y) (y - cars_y_bar))
+#(y-y_bar)^2
+cars_y_squared <- lapply(cars_y_simple, function(y) (y)^2)
+#(x-x_bar)*(y-y_bar)
+cars_x_y_prod <- Map("*", cars_x_simple, cars_y_simple)
+
+#SUMS
+#(x-x_bar)
+cars_x_summed <- sum(unlist(cars_x_simple))
+#(x-x_bar)^2
+#Sxx
+cars_Sxx <- sum(unlist(cars_x_squared))
+
+#(y-y_bar)
+cars_y_summed <- sum(unlist(cars_y_simple))
+#(y-y_bar)^2
+#Syy
+cars_SYY <- sum(unlist(cars_y_squared))
+
+#Sxy
+cars_SxY <- sum(unlist(cars_x_y_prod))
+
+#SS_R = Sxx*Syy - (SxY)^2 / Sxx
+cars_SS_R <- ((cars_Sxx * cars_SYY) - (cars_SxY)^2) / cars_Sxx
+
+#beta_hat = SxY / Sxx  
+cars_beta_hat <- cars_SxY / cars_Sxx
+
+#Test statistic = sqrt( ((n-2)*Sxx) / SS_R) * beta_hat
+cars_test_statistic <- sqrt( ((cars_n - 2) * cars_Sxx) / cars_SS_R) * cars_beta_hat
+# Simple linear regression model
+# H_0 beta = 0 against beta != 0
+# REJECT H_0: abs(TS) >= t_{n-2,gamma/2}
+# WHERE:
+# TS = sqrt( ((n-2)*S_xx) / SS_r ) * beta_hat
+
+# T_CRIT = T_(n-2),gammapercentage(0.01)/2
+cars_T_crit <- qt(1-0.005, cars_n - 2)
+# REJECT H_0: abs(TS) >= t_{n-2,gamma/2}
+cars_H_0_rejected <- ifelse(abs(cars_test_statistic) >= cars_T_crit, TRUE, FALSE)
 
 
+# NOT FROM BOOK!
+attitude.data <- data.frame(
+  correct = c(17,13,12,15,16,14,16,16,18,19),
+  attitude = c(94,73,59,80,93,85,66,79,77,91)
+)
 
+att_m <- length(attitude.data$correct)
+att_n <- length(attitude.data$attitude)
 
+#means
+att_x_bar <- mean(attitude.data$correct)
+att_y_bar <- mean(attitude.data$attitude)
+#(x - x_bar)
+att_x_simple <- lapply(attitude.data$correct, function(x) (x - att_x_bar))
+att_x_simple # <-- correct values
+#(y - y_bar)
+att_y_simple <- lapply(attitude.data$attitude, function(y) (y - att_y_bar))
+att_y_simple # <-- correct values
+#(x - x_bar)^2
+att_x_squared <- lapply(att_x_simple, function(x) (x)^2)
+att_x_squared # <-- correct values
+#(y - y_bar)^2
+att_y_squared <- lapply(att_y_simple, function(y) (y)^2)
 
+#MAP <-- mapply
+att_x_times_y <- Map("*", att_x_simple, att_y_simple)
 
+# SUM (x-x_bar)*(y-y_bar)
+att_sum_x_times_y <- sum(unlist(att_x_times_y))
+# SUM (x-x_bar)^2
+att_sum_x_bar_squared <- sum(unlist(att_x_squared))
+# SUM (y-y_bar)^2
+att_sum_y_bar_squared <- sum(unlist(att_y_squared))
 
+# PEARSON CORRELATION COEFFICIENT (r)
+# = ( SUM (x-x_bar)*(y-y_bar) / SQRT(SUM (x-x_bar)^2 * SUM (y-y_bar)^2))
+att_pearson_r <- (att_sum_x_times_y / sqrt(att_sum_x_bar_squared * att_sum_y_bar_squared))
 
+# STANDARD DEVIATIONs
+#S_YY sqrt(SUM (y-y_bar)^2 / n-1)
+att_S_yy <- sqrt(att_sum_y_bar_squared / (att_n - 1)) 
+#S_XX sqrt(SUM (x-x_bar)^2 / m-1)
+att_S_xx <- sqrt(att_sum_x_bar_squared / (att_n - 1))
+
+# SLOPE
+# BETA = r * S_YY / S_XX
+att_beta <- att_pearson_r * (att_S_yy / att_S_xx)
+
+#INTERCEPT
+# ALPHA = y_bar - beta*x_bar
+att_alpha <- att_y_bar - (att_beta * att_x_bar)
+
+# SIMPLE LINEAR REGRESSION FORMULA
+# Y = a + bx, suppose x = 15, remember to stay in bounds!
+att_15 <- 15
+att_big_Y_at_15 <- att_alpha + att_beta*att_15
