@@ -217,3 +217,73 @@ att_alpha <- att_y_bar - (att_beta * att_x_bar)
 # Y = a + bx, suppose x = 15, remember to stay in bounds!
 att_15 <- 15
 att_big_Y_at_15 <- att_alpha + att_beta*att_15
+
+# REGRESSION TO THE MEAN
+
+reg.data <- data.frame(
+  father = c(60,62,64,65,66,67,68,70,72,74),
+  son = c(63.6,65.2,66,65.5,66.9,67.1,67.4,68.3,70.1,70.0)
+)
+plot(reg.data$father, reg.data$son)
+reg_height_model <- lm(son ~ father, data = reg.data)
+summary(reg_height_model)
+abline(reg_height_model)
+reg_n <- length(reg.data$father)
+
+#means
+reg_x_bar <- mean(reg.data$father)
+reg_y_bar <- mean(reg.data$son)
+#(x-x_bar)
+reg_x_simple <- lapply(reg.data$father, function(x) (x- reg_x_bar))
+#(x-x_bar)^2
+reg_x_squared <- lapply(reg_x_simple, function(x) x^2)
+#(y-y_bar)
+reg_y_simple <- lapply(reg.data$son, function(y) (y - reg_y_bar))
+#(y-y_bar)^2
+reg_y_squared <- lapply(reg_y_simple, function(y) y^2)
+#(x-x_bar)*(y-y_bar)
+reg_x_times_y <- Map("*",reg_x_simple, reg_y_simple)
+
+#SUMS
+#(x-x_bar)
+reg_x_sum <- sum(unlist(reg_x_simple))
+#(x-x_bar)^2
+#Sxx
+reg_sxx <- sum(unlist(reg_x_squared))
+
+#(y-y_bar)
+reg_y_sum <- sum(unlist(reg_y_simple))
+#(y-y_bar)^2
+#Syy
+reg_syy <- sum(unlist(reg_y_squared))
+
+#Sxy
+reg_sxy <- sum(unlist(reg_x_times_y))
+
+# PEARSON CORRELATION COEFFICIENT (r)
+# = ( SUM (x-x_bar)*(y-y_bar) / SQRT(SUM (x-x_bar)^2 * SUM (y-y_bar)^2))
+reg_pearson_R <- reg_syx / sqrt((reg_sxx * reg_syy))
+
+#SS_R = (Sxx*Syy - (SxY)^2) / Sxx
+reg_ss_r <- (reg_sxx * reg_syy - (reg_sxy)^2) / reg_sxx
+
+#BETA = SxY / Sxx  
+reg_beta <- reg_sxy / reg_sxx
+
+# ALPHA = y_bar - beta*x_bar
+reg_alpha <- reg_y_bar - reg_beta * reg_x_bar
+
+# H_0 beta = 1 against beta < 1
+# REJECT H_0: TS <= -T_8,alpha
+# WHERE:
+# TS = sqrt( ((n-2)*S_xx) / SS_r ) * (beta_hat - 1)
+reg_test_statistic <- sqrt( ((reg_n - 2)* reg_sxx) / reg_ss_r) * (reg_beta - 1)  
+
+# T_CRIT = T_(n-2),gammapercentage(0.01)/2
+reg_t_crit <- qt(0.01,df = reg_n - 2)
+# REJECT H_0: TS <= -T_8,alpha
+reg_rejected <- ifelse(reg_test_statistic <= reg_t_crit, TRUE, FALSE)
+
+# The following data relate the number of motor vehicle deaths occurring in 12
+# counties in the northwestern United States in the years 1988 and 1989.
+
