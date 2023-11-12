@@ -262,7 +262,7 @@ reg_sxy <- sum(unlist(reg_x_times_y))
 
 # PEARSON CORRELATION COEFFICIENT (r)
 # = ( SUM (x-x_bar)*(y-y_bar) / SQRT(SUM (x-x_bar)^2 * SUM (y-y_bar)^2))
-reg_pearson_R <- reg_syx / sqrt((reg_sxx * reg_syy))
+reg_pearson_R <- reg_sxy / sqrt((reg_sxx * reg_syy))
 
 #SS_R = (Sxx*Syy - (SxY)^2) / Sxx
 reg_ss_r <- (reg_sxx * reg_syy - (reg_sxy)^2) / reg_sxx
