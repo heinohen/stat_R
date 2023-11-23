@@ -150,3 +150,79 @@ t2_ennustevali <- predict(t2_fitted, data.frame(BMI = 26.0), interval = "pred", 
 t2_ennustevali
 t2_T_viisi_crit <- qt(1-(0.05/2), t2_n - 2)
 
+### T 3 ###
+
+# Seuraavassa aineistossa esitetään moottoriajoneuvoista johtuvien kuolemien määrä 12 piirikunnissa
+# vuosina 1988 ja 1989.
+# Piirikunta Kuolemia vuonna 1988 Kuolemia vuonna 1989
+#   121 104
+# 2 96 91
+# 3 85 101
+# 4 113 110
+# 5 102 117
+# 6 118 108
+# 7 90 96
+# 8 84 102
+# 9 107 114
+# 10 112 96
+# 11 95 88
+# 12 101 106
+# Esimerkissä 12.6 näytettiin, että parametrin β estimaatti on pienempää kuin 1. Testaa tätä aineistoa
+# käyttäen hypoteesia H0 : β ≥ 1, kun vastahypoteesi on H1 : β < 1. Hylätäänkö nollahypoteesi 5%
+# merkitsevyystasolla? Miten tämä liittyy regressioon kohti keskiarvoa?
+#   
+t3_data <- data.frame(kasi = c(121,96,85,113,102,118,90,84,107,112,95,101),
+                      ysi = c(104,91,101,110,117,108,96,102,114,96,88,106))
+
+# t2_fitted <- lm(verenpaine ~ BMI, data = t2_data)
+# summary(t2_fitted)
+t3_fitted <- lm(ysi ~ kasi, data = t3_data)
+summary(t3_fitted)
+# 
+# 
+t3_n <- length(t3_data$kasi)
+# t2_n <- length(t2_data$BMI)
+t3_x_bar <- signif(mean(t3_data$kasi),6)
+# t2_x_bar <- signif(mean(t2_data$BMI),6)
+# t2_y_bar <- signif(mean(t2_data$verenpaine),6)
+t3_y_bar <- signif(mean(t3_data$ysi),6)
+# ###### X ######
+t3_jotain_x <- lapply(t3_data$kasi, function(x) (x)^2)
+# t2_jotain_x <- lapply(t2_data$BMI, function(x) (x)^2)
+t3_xtoiseen_summa <- sum(unlist(t3_jotain_x))
+# t2_xtoiseen_summa <- sum(unlist(t2_jotain_x))
+t3_Sxx <- signif(t3_xtoiseen_summa - (t3_n * (t3_x_bar)^2),6)
+# t2_Sxx <- signif(t2_xtoiseen_summa - (t2_n * (t2_x_bar)^2), 6)
+# # # ###### Y #######
+t3_jotain_y <- lapply(t3_data$ysi, function(y) (y)^2)
+# t2_jotain_y <- lapply(t2_data$verenpaine, function(y) (y)^2)
+t3_ytoiseen_summa <- sum(unlist(t3_jotain_y))
+# t2_ytoiseen_summa <- sum(unlist(t2_jotain_y))
+t3_Syy <- signif(t3_ytoiseen_summa - (t3_n * (t3_y_bar)^2),6)
+# t2_Syy <- signif(t2_ytoiseen_summa - (t2_n * (t2_y_bar)^2), 6)
+# # # ###### XY ######
+t3_x_kertaa_y <- Map("*", t3_data$kasi, t3_data$ysi)
+# t2_x_kertaa_y <- Map("*", t2_data$BMI, t2_data$verenpaine)
+t3_xy_summa <- sum(unlist(t3_x_kertaa_y))
+# t2_xy_summa <- sum(unlist(t2_x_kertaa_y))
+t3_SxY <- signif(t3_xy_summa - (t3_n * t3_x_bar * t3_y_bar), 6)
+# t2_SxY <- signif(t2_xy_summa - (t2_n * t2_x_bar * t2_y_bar), 6)
+# # # #### SSR ######
+t3_SSR <- signif(((t3_Sxx*t3_Syy-(t3_SxY)^2)/t3_Sxx), 6)
+# t2_SSR <- signif(((t2_Sxx*t2_Syy-(t2_SxY)^2)/t2_Sxx), 6)
+# # # ##### BETA HAT #######
+t3_beta_hat <- signif((t3_SxY / t3_Sxx), 6)
+# t2_beta_hat <- signif((t2_SxY / t2_Sxx), 6)
+# # # ##### ALPHA HAT ######
+t3_alpha_hat <- signif(t3_y_bar - (t3_beta_hat * t3_x_bar),6)
+# t2_alpha_hat <- signif(t2_y_bar - (t2_beta_hat * t2_x_bar), 6)
+# The square root of (n − 2)S(x, x)/SSR 
+t3_sqrt_part_TS <- signif(sqrt(((t3_n)*t3_Sxx) / t3_SSR),6)
+t3_test_statistic <- signif(t3_sqrt_part_TS*(t3_beta_hat - 1),6)
+t3_t_crit <- signif(qt((1-0.05), df = (t3_n - 2)),6)
+t3_reject_hzero <- ifelse(t3_test_statistic <= (-1 * t3_t_crit), TRUE, FALSE)
+# P-value
+t3_p_value <- pt(t3_test_statistic, df=(t3_n - 2), lower.tail = FALSE)
+t3_viisi_alpha <- 0.05
+t3_pvalue_viisi_reject <- ifelse(t3_p_value>=t3_viisi_alpha,TRUE,FALSE)
+
