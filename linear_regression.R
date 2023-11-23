@@ -22,7 +22,7 @@ abline(unit.regression)
 #############
 
 # Suppose that the responses Y_i corresponding to the input values x_i, i = 1,2,...,n
-# are to be observed and used to estimate the parameters alpha and beta in a simpe linear regression model
+# are to be observed and used to estimate the parameters alpha and beta in a simple linear regression model
 # Y = alpha + beta*x + e
 
 # beta_hat = sum_i=1_n (x_i - x_bar)(Y_i - Y_bar) / sum_i=1_n (x_i - x_bar)^2

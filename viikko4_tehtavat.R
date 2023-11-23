@@ -87,3 +87,60 @@ t1_pvalue_viisi_reject <- ifelse(t1_p_value<t1_viisi_alpha,TRUE,FALSE)
 # nelja_pvalue_yksi_reject <- ifelse(nelja_p_value<nelja_yksi_alpha,TRUE,FALSE)
 
 
+# tarkastellaan allaolevaa aineistoa, jossa on listattuna kahdeksan sa-
+#   tunnaisesti valitun, ei verenpainelääkettä käyttävän miehen painoindeksit (BMI) sekä systoliset ve-
+#   renpaineet.
+t2_data <- data.frame(BMI = c(20.3, 22.0, 26.4, 28.2, 31.0, 32.6, 17.6, 19.4),
+                      verenpaine = c(116, 110, 131, 136, 144, 138, 122, 115))
+t2_fitted <- lm(verenpaine ~ BMI, data = t2_data)
+summary(t2_fitted)
+
+
+# t1_n <- length(t1_data$paasykoe)
+t2_n <- length(t2_data$BMI)
+# t1_x_bar <- signif(mean(t1_data$paasykoe),6)
+t2_x_bar <- signif(mean(t2_data$BMI),6)
+# t1_y_bar <- signif(mean(t1_data$keskiarvo),6)
+t2_y_bar <- signif(mean(t2_data$verenpaine),6)
+###### X ######
+# t1_jotain_x <- lapply(t1_data$paasykoe, function(x) (x)^2)
+t2_jotain_x <- lapply(t2_data$BMI, function(x) (x)^2)
+# t1_xtoiseen_summa <- sum(unlist(t1_jotain_x))
+t2_xtoiseen_summa <- sum(unlist(t2_jotain_x))
+# t1_Sxx <- signif(t1_xtoiseen_summa - (t1_n * (t1_x_bar)^2),6)
+t2_Sxx <- signif(t2_xtoiseen_summa - (t2_n * (t2_x_bar)^2), 6)
+# # ###### Y #######
+# t1_jotain_y <- lapply(t1_data$keskiarvo, function(y) (y)^2)
+t2_jotain_y <- lapply(t2_data$verenpaine, function(y) (y)^2)
+# t1_ytoiseen_summa <- sum(unlist(t1_jotain_y))
+t2_ytoiseen_summa <- sum(unlist(t2_jotain_y))
+# t1_Syy <- signif(t1_ytoiseen_summa - (t1_n * (t1_y_bar)^2),6)
+t2_Syy <- signif(t2_ytoiseen_summa - (t2_n * (t2_y_bar)^2), 6)
+# # ###### XY ######
+# t1_x_kertaa_y <- Map("*", t1_data$paasykoe, t1_data$keskiarvo)
+t2_x_kertaa_y <- Map("*", t2_data$BMI, t2_data$verenpaine)
+# t1_xy_summa <- sum(unlist(t1_x_kertaa_y))
+t2_xy_summa <- sum(unlist(t2_x_kertaa_y))
+# t1_SxY <- signif(t1_xy_summa - (t1_n * t1_x_bar * t1_y_bar), 6)
+t2_SxY <- signif(t2_xy_summa - (t2_n * t2_x_bar * t2_y_bar), 6)
+# # #### SSR ######
+# t1_SSR <- signif(((t1_Sxx*t1_Syy-(t1_SxY)^2)/t1_Sxx),6)
+t2_SSR <- signif(((t2_Sxx*t2_Syy-(t2_SxY)^2)/t2_Sxx), 6)
+# # ##### BETA HAT #######
+# t1_beta_hat <- signif((t1_SxY / t1_Sxx),6)
+t2_beta_hat <- signif((t2_SxY / t2_Sxx), 6)
+# # ##### ALPHA HAT ######
+# t1_alpha_hat <- signif(t1_y_bar - (t1_beta_hat * t1_x_bar),6)
+t2_alpha_hat <- signif(t2_y_bar - (t2_beta_hat * t2_x_bar), 6)
+
+# Laske 95 prosentin ennusteväli verenpaineelle sellaiselle miehelle, joka ei käytä verenpainelääkettä
+# ja jonka painoindeksi on 26.0.
+
+# ensin Y ennuste
+t2_ennuste_verenpaine <- predict(t2_fitted, data.frame(BMI = 26.0), interval = "conf")
+t2_ennuste_verenpaine
+# ennuste käsin == sama
+t2_xennuste <- 26.0
+t2_kasin_ennuste <- t2_alpha_hat + t2_beta_hat*t2_xennuste
+t2_ennustevali <- predict(t2_fitted, data.frame(BMI = 26.0), interval = "pred", level = 0.95)
+t2_ennustevali

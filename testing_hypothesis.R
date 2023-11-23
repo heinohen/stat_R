@@ -129,6 +129,13 @@ V_h_zero_cig <- 1.5
 V_test_statistic <- sqrt(V_n) * (V_Xbar - V_h_zero_cig)/V_SD
 V_p_value <- pnorm(V_test_statistic)
 
+
+V_TEST_p_value <- round(pnorm(2.9082), digits = 2)
+V_TEST_alpha <- 1-0.99
+V_TEST_rejected <- V_TEST_p_value <= V_TEST_alpha
+
+
+
 #REJECT H_0 if TS <= -Z_alpha
 V_rejected <- V_p_value <= V_alpha
 
