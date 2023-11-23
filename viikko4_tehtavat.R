@@ -225,4 +225,47 @@ t3_reject_hzero <- ifelse(t3_test_statistic <= (-1 * t3_t_crit), TRUE, FALSE)
 t3_p_value <- pt(t3_test_statistic, df=(t3_n - 2), lower.tail = FALSE)
 t3_viisi_alpha <- 0.05
 t3_pvalue_viisi_reject <- ifelse(t3_p_value>=t3_viisi_alpha,TRUE,FALSE)
+## T4 ##
+# 
+# Puuvillan osuus 13 15 18 20 18 20 17 18
+# Kuivumisaika 2.5 2.2 2.5 2.4 3.2 3.3 4.1 4.3
+# Vetolujuus 212 221 230 219 245 238 243 242
+t4_data <- data.frame(puuvilla = c(13,15,18,20,18,20,17,18),
+                      kuivumisaika = c(2.5,2.2,2.5,2.4,3.2,3.3,4.1,4.3),
+                      vetolujuus = c(212,221,230,219,245,238,243,242))
+t4_fitted <- lm(vetolujuus ~ puuvilla+kuivumisaika, data = t4_data)
+summary(t4_fitted)
+# 1. Sovita aineistoon usean selittäjän lineaarinen regressiomalli, jossa vetolujuus on selitettävä
+# muuttuja ja puuvillan osuus ja kuivumisaika selittävät muuttujat.
+# 2. Laske ennuste kuidun vetolujuudelle, kun kyseinen kuitu on 22% puuvillaa ja sen kuivumisaika
+# on 3.5.
+# 
+# matrix()
+# > matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow=3, ncol=3, byrow=TRUE)
+# [,1] [,2] [,3]
+# [1,] 1 2 3
+# [2,] 4 5 6
+# [3,] 7 8 9
 
+#solve( t(X) %*% X )  %*% t(X) %*% Y
+t4_x_mat <- matrix(c(1,13,2.5,1,15,2.2,1,18,2.5,1,20,2.4,1,18,3.2,1,20,3.3,1,17,4.1,1,18,4.3),nrow=8, ncol=3, byrow=TRUE)
+t4_y_vek <- c(212,221,230,219,245,238,243,242)
+t4_beta_hats <- solve( t(t4_x_mat) %*% t4_x_mat) %*% t(t4_x_mat) %*% t4_y_vek
+t4_beta_hats
+t4_ennustus_puuvilla <- 22
+t4_ennustus_kuivumisaika <- 3.5
+t4_ennustus_lasku <- t4_beta_hats[1,1]+t4_beta_hats[2,1]*t4_ennustus_puuvilla+t4_beta_hats[3,1]*t4_ennustus_kuivumisaika
+t4_ennustus_lasku
+
+#poista tästä
+t4_ennustus_df <- data.frame(puuvilla = 22,
+                             kuivumisaika = 3.5)
+t4_ennustusLM <- predict(t4_fitted, newdata = t4_ennustus_df, interval = 'pred')
+t4_ennustusLM
+# esimerkki_y_vektori <- c(46.6,45.7,50.4,66.5,82.1,63.7,75.8,58.9)
+# esimerkki_y_vektori
+# esimerkki_x_matriisi <- matrix(c(1,15.4,100,1,18.2,85,1,17.6,95,1,18.4,140,1,24.0,150,1,25.2,100,1,30.3,120,1,31.0,80),nrow=length(esimerkki_y_vektori), ncol=3, byrow=TRUE)
+# esimerkki_x_matriisi
+# esimerkki_beta_hats <- solve( t(esimerkki_x_matriisi) %*% esimerkki_x_matriisi) %*% t(esimerkki_x_matriisi) %*% esimerkki_y_vektori
+# esimerkki_beta_hats
+summary(t4_fitted)
