@@ -61,6 +61,7 @@ t1_ennustevali
 # 
 # #Test statistic = sqrt( ((n-2)*Sxx) / SS_R) * beta_hat
 # nelja_test_statistic <- (sqrt( ((nelja_n - 2) * NELJA_oikea_Sxx) / ssr_nelja)) * beta_hat_NELJA
+t1_test_statistic <- (sqrt( ((t1_n - 2) * t1_Sxx) / t1_SSR)) * t1_beta_hat
 # # Simple linear regression model
 # # H_0 beta = 0 against beta != 0
 # # REJECT H_0: abs(TS) >= t_{n-2,gamma/2}
@@ -69,15 +70,20 @@ t1_ennustevali
 # 
 # # T_CRIT = T_(n-2),gammapercentage(0.05)/2
 # nelja_T_viisi_crit <- qt(1-0.025, nelja_n - 2)
+t1_T_viisi_crit <- qt(1-0.025, t1_n - 2)
 # nelja_T_yksi_crit <- qt(1-0.005, nelja_n - 2)
 # # REJECT H_0: abs(TS) >= t_{n-2,gamma/2}
 # nelja_H_0_viisi_rejected <- ifelse(abs(nelja_test_statistic) >= nelja_T_viisi_crit,TRUE,FALSE)
+t1_H_0_viisi_rejected <- ifelse(abs(t1_test_statistic) >= t1_T_viisi_crit, TRUE, FALSE)
 # nelja_H_0_yksi_rejected <- ifelse(abs(nelja_test_statistic) >= nelja_T_yksi_crit, TRUE, FALSE)
 # #####P-VALUE######
 # nelja_viisi_alpha <- 0.05
+t1_viisi_alpha <- 0.05
 # nelja_yksi_alpha <- 0.01
 # nelja_p_value <- 2 * pt(4.3809, df=10, lower.tail = FALSE)
-# nelja_pvalue_viisi_reject <- ifelse(nelja_p_value<nelja_viisi_alpha,TRUE,FALSE)
+t1_p_value <- 2 * pt(t1_test_statistic, df=(t1_n - 2), lower.tail = FALSE)
+
+t1_pvalue_viisi_reject <- ifelse(t1_p_value<t1_viisi_alpha,TRUE,FALSE)
 # nelja_pvalue_yksi_reject <- ifelse(nelja_p_value<nelja_yksi_alpha,TRUE,FALSE)
 
 
