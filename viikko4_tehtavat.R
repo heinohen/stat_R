@@ -140,7 +140,13 @@ t2_alpha_hat <- signif(t2_y_bar - (t2_beta_hat * t2_x_bar), 6)
 t2_ennuste_verenpaine <- predict(t2_fitted, data.frame(BMI = 26.0), interval = "conf")
 t2_ennuste_verenpaine
 # ennuste käsin == sama
+# W #
+t2_w <- round(sqrt((1 + (1/(t2_n)) + ((26.0 - t2_x_bar)^2)/t2_Sxx) * (t2_SSR / (t2_n - 2))),6)
+
+# X nolla #
 t2_xennuste <- 26.0
 t2_kasin_ennuste <- t2_alpha_hat + t2_beta_hat*t2_xennuste
 t2_ennustevali <- predict(t2_fitted, data.frame(BMI = 26.0), interval = "pred", level = 0.95)
 t2_ennustevali
+t2_T_viisi_crit <- qt(1-(0.05/2), t2_n - 2)
+
