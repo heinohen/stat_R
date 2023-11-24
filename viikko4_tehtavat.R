@@ -248,15 +248,29 @@ summary(t4_fitted)
 # [3,] 7 8 9
 
 #solve( t(X) %*% X )  %*% t(X) %*% Y
+<<<<<<< HEAD
 t4_x_mat <- matrix(c(1,13,2.5,1,15,2.2,1,18,2.5,1,20,2.4,1,18,3.2,1,20,3.3,1,17,4.1,1,18,4.3),
                    nrow=8, ncol=3, byrow=TRUE)
 t4_y_vek <- c(212,221,230,219,245,238,243,242)
 t4_beta_hats <- solve( t(t4_x_mat) %*% t4_x_mat) %*% t(t4_x_mat) %*% t4_y_vek
+=======
+t4_x_mat <- matrix(c(1,13,2.5,
+                     1,15,2.2,
+                     1,18,2.5,
+                     1,20,2.4,
+                     1,18,3.2,
+                     1,20,3.3,
+                     1,17,4.1,
+                     1,18,4.3),
+                   nrow=8, ncol=3, byrow=TRUE)
+t4_y_mat <- matrix(c(212,221,230,219,245,238,243,242),ncol=1)
+t4_beta_hats <- solve( t(t4_x_mat) %*% t4_x_mat) %*% t(t4_x_mat) %*% t4_y_mat
+>>>>>>> 69a619e0f05e2b646efe38d916a455d41f1dca3a
 t4_beta_hats
-t4_ennustus_puuvilla <- 22
-t4_ennustus_kuivumisaika <- 3.5
-t4_ennustus_lasku <- t4_beta_hats[1,1]+t4_beta_hats[2,1]*t4_ennustus_puuvilla+t4_beta_hats[3,1]*t4_ennustus_kuivumisaika
-t4_ennustus_lasku
+t4_e_pv <- 22
+t4_e_ka <- 3.5
+t4_e_lasku <- t4_beta_hats[1,1]+t4_beta_hats[2,1]*t4_e_pv+t4_beta_hats[3,1]*t4_e_ka
+t4_e_lasku
 
 #poista tästä
 t4_ennustus_df <- data.frame(puuvilla = 22,
