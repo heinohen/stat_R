@@ -125,6 +125,75 @@ jaannosnelio <- function(mat) {
 t4_SSe <- jaannosnelio(t3_data)
 
 #testisuureet
-# t2_crit <- qf((1- t2_alpha), (t2_m - 1), (t2_m*(t2_n - 1)))
+
+# crit
+t4_viis_alpha <- 0.05
+t4_yksi_alpha <- 0.01
+
 # N = (n − 1)(m − 1)
 t4_N <- (length(t3_data[,1])-1) * (length(t3_data[1,]) - 1)
+
+# TS_ROW
+t4_ts_row <- (t4_SSc / ( t4_n - 1)) / (t4_SSe / t4_N)
+# F_(m-1, N, alpha) ROW
+# VIISI 
+t4_crit_row <- qf((1 - t4_viis_alpha), (t4_n - 1), t4_N)
+# YKSI
+t4_crit_row_yksi <- qf((1- t4_yksi_alpha), (t4_m - 1), t4_N)
+# REJECT ?
+t4_rejected_row <- ifelse(t4_ts_row >= t4_crit_row, TRUE, FALSE)
+t4_rejected_row_yksi <- ifelse(t4_ts_row >= t4_crit_row_yksi, TRUE, FALSE)
+# P-VALUE ROW == TS, m-1, N, lowertail FALSE
+t4_pvalue_row <- pf(t4_ts_row, (t4_m-1), t4_N, lower.tail = FALSE)
+t4_rejected_row_pvalue <- ifelse(t4_pvalue_row<t4_viis_alpha, TRUE, FALSE)
+t4_rejected_row_pvalue_yksi <- ifelse(t4_pvalue_row<t4_yksi_alpha, TRUE, FALSE)
+
+# TS COL
+t4_ts_col <- (t4_SSr / ( t4_m - 1)) / (t4_SSe / t4_N)
+# F_(n-1, N, alpha) COL
+# VIISI
+t4_crit_col <- qf((1- t4_viis_alpha), (t4_m -1), t4_N)
+# YKSI
+t4_crit_col_yksi <- qf((1 - t4_yksi_alpha), (t4_n -1), t4_N)
+# REJECT ?
+t4_rejected_col <- ifelse(t4_ts_col >= t4_crit_col, TRUE, FALSE)
+t4_rejected_col_yksi <- ifelse(t4_ts_col>= t4_crit_col_yksi, TRUE, FALSE)
+# P-VALUE COL TS, n-1, N, lowertail FALSE
+t4_pvalue_col <- pf(t4_ts_col, (t4_n -1) , t4_N, lower.tail = FALSE)
+t4_rejected_col_pvalue <- ifelse(t4_pvalue_col<t4_viis_alpha, TRUE, FALSE)
+t4_rejected_col_pvalue_yksi <- ifelse(t4_pvalue_col<t4_yksi_alpha, TRUE, FALSE)
+
+# TEHTÄVÄ 5
+# 
+# Ravitsemusterapeutti väittää, että määrällä, jonka henkilö juoksee,
+# on yhteys kyseisen henkilön veren kolesteroliarvoihin.
+# Valittiin satunnaisesti 6 juoksijaa kolmesta eri kategoriasta
+# ja heidän veren kolesteroliarvonsa testattiin.
+# Saatiin seuraavat otoskeskiarvot ja otosvarianssit:
+                                # x_bar_i s_i^2
+t5_data <- data.frame(alle_viis = c(188,190),
+                      viis_kolme = c(181,211),
+                      yli_kolme = c(174,202))
+t5_m <- length(t5_data)
+t5_n <- length((t5_data$alle_viis)) *length(t5_data[1,])
+
+t5_xbarbar <- (sum(t5_data[1,]) / length(t5_data[1,]))
+t5_s_bar_2 <- ((t5_data$alle_viis[1] - t5_xbarbar)^2 + (t5_data$viis_kolme[1] - t5_xbarbar)^2 + (t5_data$yli_kolme[1]- t5_xbarbar)^2) / (t5_m -1)
+t5_s_i_2 <- (sum(t5_data[2,]) / length(t5_data[2,]))
+
+# TS = n*s_bar_2 / sum 1/m s_i_^2
+t5_ts <- (t5_n * t5_s_bar_2) / t5_s_i_2
+
+# CRIT 5% m-1, m*(n-1)
+t5_alpha <- 0.05
+t5_crit <- qf((1-t5_alpha), 2, 15)
+t5_rejected <- ifelse(t5_ts >= t5_crit, TRUE, FALSE)
+# P-value TS, m-1, m*(n-1)
+t5_pvalue <- pf(t5_ts, (t5_m - 1), t5_m * (t5_n -1))
+
+
+
+
+
+
+
