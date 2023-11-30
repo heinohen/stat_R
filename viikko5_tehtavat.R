@@ -199,3 +199,45 @@ t3_rejected_pvalue_viisi <- ifelse(t3_pvalue < t3_alpha_viisi, TRUE, FALSE)
 t3_rejected_pvalue_yksi <- ifelse(t3_pvalue < t3_alpha_yksi, TRUE, FALSE)
 # 
 # 
+
+# TEHTÄVÄ 4
+
+# Sivu 596, tehtävä 6) Erään alueen autoilijoista 84 prosenttia ei ole ollut osallisena
+# liikenneonnettomuudessa viimeisen vuoden aikana,
+# 14 prosenttia on ollut osallisena tasan yhdessä onnettomuudessa ja
+# 2 prosenttia on ollut osallisena ainakin kahdessa on- nettomuudessa.
+# Poimitaan neljänsadan lakimiehen satunnaisotos kyseiseltä alueelta.
+# Otoksen lakimiehistä 308 ei ollut ollut osallisena liikenneonnettomuudessa
+# viimeisen vuoden aikana, 66 oli ollut yhdessä onnettomuudessa ja 26
+# ainakin kahdessa onnetto- muudessa. Voidaanko tästä päätellä,
+# että lakimiesten yhteys liikenneonnettomuuksiin poikkeaa alueen muista autoilijoista?
+                        #0  1     2   kolaria 
+t4_expected_probs <- c(0.84,0.14,0.02)
+t4_expected_freq <- lapply(t4_expected_probs, function(x) x*400)
+t4_vec_exp_frq <- unlist(t4_expected_freq)
+
+# 0   1   2   kolaria
+t4_lakimiehet_observed <- c(308,66,26)
+t4_n <- 400
+
+t4_freqs <- lapply(t4_lakimiehet_observed, function(x) x / t4_n)
+t4_vec_freqs <- unlist(t4_freqs)
+t4_vec_freqs
+t4_eka <- ((t4_lakimiehet_observed[1] - t4_expected_freq[[1]])^2 / t4_expected_freq[[1]])
+t4_toka <- ((t4_lakimiehet_observed[2] - t4_expected_freq[[2]])^2 / t4_expected_freq[[2]])
+t4_kolmas <- ((t4_lakimiehet_observed[3] - t4_expected_freq[[3]])^2 / t4_expected_freq[[3]])
+t4_summat <- t4_eka + t4_toka + t4_kolmas
+
+t4_otos <- c(308,66,26) # lakimiehet
+t4_osuudet <- c(0.84,0.14,0.02) # odotetut osuudet
+chisq.test(otos,p=osuudet)
+
+
+# H_0 lakimiesten yhteys liikenneonnettomuuksiin ei poikkea
+# H_1 lakimiesten yhteys liikenneonnettomuuksiin poikkeaa
+t4_crit <- qchisq(1-0.05,2)
+t4_crit_yksi <- qchisq(1-0.01,2)
+t4_pvalue <- 1 - pchisq(t4_summat, (length(t4_otos)-1))
+#0.000000000204
+
+# Hylätään H_0
