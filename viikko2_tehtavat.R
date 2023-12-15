@@ -14,6 +14,20 @@ t2_data <- data.frame(papu1 = c(2.3,2.9,2.3,1.9,2.5),
                       papu2 = c(1.1,2.1,0.9,1.8,1.5),
                       papu3 = c(3.2,2.9,2.5,3.7,3.1))
 
+
+##### SAMA TESTI vvvvvvv
+t2_data_testi <- data.frame(sample = c(2.3,2.9,2.3,1.9,2.5,
+                                       1.1,2.1,0.9,1.8,1.5,
+                                       3.2,2.9,2.5,3.7,3.1),
+                            group = factor(c(1,1,1,1,1,2,2,2,2,2,3,3,3,3,3),
+                            labels=c('papu1','papu2','papu3')))
+
+t2_oneway <- oneway.test(sample ~ group, data = t2_data_testi, var.equal = TRUE)
+t2_oneway
+
+##### SAMA TESTI ^^^^^^ 
+
+
 # otoskeskiarvot
 t2_papu1_xbar <- mean(t2_data$papu1)
 t2_papu2_xbar <- mean(t2_data$papu2)
@@ -66,6 +80,45 @@ t3_data <- matrix(c(296,357,340,348,
                     345,342,358,308,
                     360,322,336,270,
                     324,339,357,308), nrow = 5, ncol = 4, byrow = TRUE)
+###############################
+
+# kauran mukaan alkaa 11112222333344445555
+# 
+# t2_data_testi <- data.frame(sample = c(2.3,2.9,2.3,1.9,2.5,
+#                                        1.1,2.1,0.9,1.8,1.5,
+#                                        3.2,2.9,2.5,3.7,3.1),
+#                             group = factor(c(1,1,1,1,1,2,2,2,2,2,3,3,3,3,3),
+#                                            labels=c('papu1','papu2','papu3')))
+
+
+
+t3_owt_testi <- data.frame(sample = c(296,357,340,348,
+                                      402,390,420,335,
+                                      345,342,358,308,
+                                      360,322,336,270,
+                                      324,339,357,308),
+                           kaura = factor(c(1,1,1,1,
+                                            2,2,2,2,
+                                            3,3,3,3,
+                                            4,4,4,4,
+                                            5,5,5,5),
+                                          labels=c('k1','k2','k3','k4','k5')),
+                           pelto = factor(c(1,2,3,4,
+                                            1,2,3,4,
+                                            1,2,3,4,
+                                            1,2,3,4,
+                                            1,2,3,4),
+                                          labels=c('p1','p2','p3','p4')))
+
+                            
+kaura <- oneway.test(t3_owt_testi$sample ~ t3_owt_testi$kaura, var.equal = TRUE)              
+kaura$statistic
+
+pelto <- oneway.test(t3_owt_testi$sample ~ t3_owt_testi$pelto, var.equal = TRUE)
+pelto$statistic
+##################################
+
+
 # yleiskeskiarvo
 # (kaikki arvot) / rivit * sarakkeet
 t3_yleis_ka <- mean(t3_data)

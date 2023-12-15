@@ -1,3 +1,13 @@
+# TEHTÄVÄ 2 
+# sivu 523, tehtävä 2) Erään tavaratalon aluepäällikkö haluaa tutkia, millainen suhde
+# paikan päällä olevien työntekijöiden lukumäärän ja kaupasta varastettujen tuotteiden
+# aiheuttaman hävikin välillä on. Tämän selvittämiseksi tavaratalossa suoritetaan kymmenen viikon kokeilu,
+# jonka aikana aluepäällikkö asettaa joka viikko paikan päälle eri
+# määrän työntekijöitä ja laskee kunkin viikon päätyttyä varkauksista johtuvan hävikin.
+# Kokeilusta saatiin seuraavat tulokset
+
+
+
 tehtava_2_data <- data.frame(
   tyontekijat = c(9,11,12,13,15,18,16,14,12,10),
   havikki = c(420,350,360,300,225,200,230,280,315,410)
@@ -8,17 +18,71 @@ tehtava_2_data <- data.frame(
 #abline(t2_model)
 
 
+# TEHTÄVÄ 3
+# Sivu 536, tehtävä 8) Kahdenkymmenenviiden (25) isän (x) ja heidän poikiensa (Y )
+# parranajon aloittamisen ikään liittyvän aineiston tunnusluvuiksi saatiin seuraavat:
+
+# TÄMÄ tarkistettu ja toimii
+
+t3_n <- 25
+t3_xbar <- 13.9
+t3_Ybar <- 14.6
+t3_Sxx <- 46.8
+t3_Syy <- 53.3
+t3_SxY <- 12.2
+
+# a) Sovita aineistoon lineaarinen malli ja määritä sen PNS estimaatit
+
+# betahat = Sxy / Sxx
+
+t3_beta_hat <- t3_SxY / t3_Sxx
+
+# alphahat = Ybar - betahat * xbar
+t3_alpha_hat <- t3_Ybar - t3_beta_hat * t3_xbar
+
+
+# (b) Laske ennuste iälle, jona poika aloittaa parranajon, jos hänen isänsä aloitti 15.1
+# vuotta vanhana
+t3_estimoitava_arvo <- 15.1
+
+# Y = alpha_hat + betahat * estimoitava-arvo
+t3_estimaatti <- t3_alpha_hat + t3_beta_hat * t3_estimoitava_arvo
+
+# (c) Estimoi σ^2
+
+# sigma^2 = SSr / n - 2
+# SSr = Sxx * Syy - Sxy^2 / Sxx
+# n - 2 = 1 / n - 2
+t3_var_est <- (1 / (t3_n - 2)) * ((t3_Sxx * t3_Syy - (t3_SxY^2)) / t3_Sxx)
+
+
+# TEHTÄVÄ 4
+
+# TÄMÄ TOIMII
+
 nelja_tehtava_data <- data.frame(
   pituus = c(183,160,196,186,195,182,208,169,166,198,145,168),
   palkka = c(100,92,106,92,109,101,116,96,94,101,93,96)
 )
 
 nelja_tehtava_model <- lm(palkka ~ pituus, data = nelja_tehtava_data)
-plot(palkka ~ pituus, data = nelja_tehtava_data)
-abline(nelja_tehtava_model)
+# plot(palkka ~ pituus, data = nelja_tehtava_data)
+# abline(nelja_tehtava_model)
+# summary(nelja_tehtava_model)
+
+# Tästä saadaan summaryllä ulos TS ja p-arvo
 summary(nelja_tehtava_model)
+# TS
+t4_lm_ts <- summary(nelja_tehtava_model)$coefficients[2,3]
+t4_lm_ts
+t4_lm_crit <- qt(1-(0.05/2), 12- 2)
+ifelse(t4_lm_ts >= t4_lm_crit, TRUE, FALSE)
+# # T_CRIT = T_(n-2),gammapercentage(0.05)/2
+# nelja_T_viisi_crit <- qt(1-0.025, nelja_n - 2)
+# nelja_T_yksi_crit <- qt(1-0.005, nelja_n - 2)
+# P-arvo
 
-
+summary(nelja_tehtava_model)$coefficients[2,4]
 
 ##### LASKETAAN TÄHÄN NYT OIKEASTI
 
