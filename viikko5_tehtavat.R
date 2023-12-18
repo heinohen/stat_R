@@ -58,6 +58,7 @@ t1_chisq <- chisq.test(t1_jaristykset)
 # Odotettu frekvenssi kaikille päiville, sama tn niin yksi arvo riittää
 t1_e_i <- signif((t1_n * t1_P_i),5)
 
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
 
 
 # ████████ ███████ 
@@ -109,8 +110,9 @@ t1_rejected_pvalue <- ifelse(t1_ts < t1_alpha, TRUE, FALSE)
 #    ██    █████   ███████    ██    ███████ ██    ██ ███████      █████  
 #    ██    ██      ██   ██    ██    ██   ██  ██  ██  ██   ██     ██      
 #    ██    ███████ ██   ██    ██    ██   ██   ████   ██   ██     ███████ 
-
 # TEHTÄVÄ 2
+
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
 
 # On ollut näyttöä, että koiran omistaminen saattaa ennustaa selviääkö
 # henkilö sydänkohtauksesta hengissä.
@@ -124,6 +126,8 @@ t1_rejected_pvalue <- ifelse(t1_ts < t1_alpha, TRUE, FALSE)
 # että koiran omistaminen ja sydän- kohtauksesta selviäminen ovat riippuvaisia?
 # Kerro huolellisesti mitä nollahypoteesia testaat
 # (kerro myös vastahypoteesi) ja mitä testisuuretta käytät.
+
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
 
 # H_0: Selvityminen on riippumatonta koiran omistamisen kanssa
 # H_1: Selviytyminen on riippuvaista koiran omistamisen kanssa
@@ -142,6 +146,7 @@ t2_mat
 # [1,]   28   44 
 # [2,]    8   15 
 
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
 
 #   ██████ ██   ██ ██ ███████  ██████      ████████ ███████ ███████ ████████ 
 # ██       ██   ██ ██ ██      ██    ██        ██    ██      ██         ██    
@@ -154,20 +159,20 @@ t2_mat
 t2_chisq <- chisq.test(t2_mat, corr = F)
 t2_chisq$p.value
 
-# Tällä saa tarkastettua
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
 
+# Tällä saa tarkastettua
 # Lasketaan odotetut frekvenssit
 # (apply(O, 1, sum) %*% t(apply(O,2,sum))) / sum(O) > # Lasketaan testisuure
 t2_matriisilasku  <- (apply(t2_mat, 1, sum) %*% t(apply(t2_mat,2,sum))) / sum(t2_mat)
 # > X <- sum((O - E)ˆ2 / E)
 t2_matriisitulos <- sum(( t2_mat - t2_matriisilasku)^2 / t2_matriisilasku)
-#>X
-#[1] 35.83937
 #> pchisq(B, df=length(row)-1, lower=F)
 t2_chisq_laskettu <- pchisq(t2_matriisitulos, df = length(t2_mat[2,]) - 1, lower.tail = F)
 
-# Tai sitten käsin
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
 
+# Tai sitten käsin
 # rivisummat
 t2_r1_sum <- sum(t2_mat[1,])
 t2_r2_sum <- sum(t2_mat[2,])
@@ -219,8 +224,15 @@ t2_pvalue <- 1 - pchisq(t2_chi, t2_df)
 # REJECT Pvalue < alpha
 t2_rejected_pvalue <- ifelse(t2_pvalue < t2_alpha, TRUE, FALSE)
 
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
+
+# ████████ ███████ ██   ██ ████████  █████  ██    ██  █████      ██████  
+#    ██    ██      ██   ██    ██    ██   ██ ██    ██ ██   ██          ██ 
+#    ██    █████   ███████    ██    ███████ ██    ██ ███████      █████  
+#    ██    ██      ██   ██    ██    ██   ██  ██  ██  ██   ██          ██ 
+#    ██    ███████ ██   ██    ██    ██   ██   ████   ██   ██     ██████  
 # TEHTÄVÄ 3 
-# 
+
 # (Sivu 612, tehtävä 6) Eräällä kahdensadan opiskelijan tilastotieteen kurssilla sataa satunnaisesti
 # valittua opiskelijaa pyydettiin seuraamaan kurssin luennot videoituna. Loput sata opiskelijaa seura-
 #   sivat luennot paikan päällä luentosalissa. Allaolevassa taulukossa on listattuna opiskelijoiden saamat
@@ -234,48 +246,57 @@ t2_rejected_pvalue <- ifelse(t2_pvalue < t2_alpha, TRUE, FALSE)
 #   
 # 
 # 
-# t2_matriisi <- matrix(c(28,44,8,15), nrow=2, ncol=2,byrow = TRUE)
-t3_matriisi <- matrix(c(22,38,35,5,18,32,40,10),nrow = 2, ncol = 4, byrow = TRUE)
-# t2_matriisi[1,1] # <--- 28
-t3_chsiq_test <- chisq.test(t3_matriisi)
-t3_chsiq_test$expected
-# #my_matrix <- cbind(my_matrix, c(2, 7, 7, 8))
 
-# t2_m_sum <- t2_matriisi[1,1] + t2_matriisi[1,2] + t2_matriisi[2,1] + t2_matriisi[2,2]
-# 
-# t2_matriisi <- cbind(t2_matriisi, c(t2_r1_sum, t2_r2_sum))
-t3_matriisi <- cbind(t3_matriisi, c(sum(t3_matriisi[1,]), sum(t3_matriisi[2,])))
-# t2_matriisi <- rbind(t2_matriisi, c(t2_s1_sum, t2_s2_sum, t2_m_sum))
-t3_matriisi <- rbind(t3_matriisi, c(sum(t3_matriisi[,1]),
-                                    sum(t3_matriisi[,2]),
-                                    sum(t3_matriisi[,3]),
-                                    sum(t3_matriisi[,4]),
-                                    sum(t3_matriisi[,5])))
+
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
+
+# ██████   █████  ████████  █████  
+# ██   ██ ██   ██    ██    ██   ██ 
+# ██   ██ ███████    ██    ███████ 
+# ██   ██ ██   ██    ██    ██   ██ 
+# ██████  ██   ██    ██    ██   ██ 
+
+t3_matriisi <- matrix(c(22,38,35,5,18,32,40,10),nrow = 2, ncol = 4, byrow = TRUE)
+t3_matriisi
+
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
+
+#   ██████ ██   ██ ██ ███████  ██████      ████████ ███████ ███████ ████████ 
+# ██       ██   ██ ██ ██      ██    ██        ██    ██      ██         ██    
+# ██       ███████ ██ ███████ ██    ██        ██    █████   ███████    ██    
+# ██       ██   ██ ██      ██ ██ ▄▄  █        ██    ██           ██    ██    
+#   ██████ ██   ██ ██ ███████  ██████         ██    ███████ ███████    ██    
+#    ▀▀                                         
+
+#Tällä saa suoraan oikeat arvot.
+t3_chsiq_test <- chisq.test(t3_matriisi)
+
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
+
+# Tai sitten käsin
+t3_matriisi_sarakkeet <- cbind(t3_matriisi, c(sum(t3_matriisi[1,]), sum(t3_matriisi[2,])))
+
+t3_matriisi_valmis <- rbind(t3_matriisi_sarakkeet, c(sum(t3_matriisi_sarakkeet[,1]),
+                                                    sum(t3_matriisi_sarakkeet[,2]),
+                                                    sum(t3_matriisi_sarakkeet[,3]),
+                                                    sum(t3_matriisi_sarakkeet[,4]),
+                                                    sum(t3_matriisi_sarakkeet[,5])))
+
 # 
 # # paikanpäällä ----> rivi 1 Eij = (n_r * n_s) / n
 # #ODOTUSARVOT
-t3_pp_expected_viisi <- (t3_matriisi[1,5] * t3_matriisi[3,1]) / t3_matriisi[3,5]
-# t2_selvisi_expected_ei_koiraa <- (t2_r1_sum * t2_s2_sum) / t2_m_sum
-t3_pp_expected_nelja <- (t3_matriisi[1,5] * t3_matriisi[3,2]) / t3_matriisi[3,5]
-# t2_ei_selvinnyt_expected_koira <- (t2_r2_sum * t2_s1_sum) / t2_m_sum
-t3_pp_expected_kolme <- (t3_matriisi[1,5] * t3_matriisi[3,3]) / t3_matriisi[3,5]
-# t2_ei_selvinnyt_expected_ei_koiraa <- (t2_r2_sum * t2_s2_sum) / t2_m_sum
-t3_pp_expected_huono <- (t3_matriisi[1,5] * t3_matriisi[3,4]) / t3_matriisi[3,5]
-# t2_ei_selvinnyt_expected_ei_koiraa <- (t2_r2_sum * t2_s2_sum) / t2_m_sum
-t3_ei_expected_viisi <- (t3_matriisi[2,5] * t3_matriisi[3,1]) / t3_matriisi[3,5]
-# t2_ei_selvinnyt_expected_ei_koiraa <- (t2_r2_sum * t2_s2_sum) / t2_m_sum
-t3_ei_expected_nelja <- (t3_matriisi[2,5] * t3_matriisi[3,2]) / t3_matriisi[3,5]
-# t2_ei_selvinnyt_expected_ei_koiraa <- (t2_r2_sum * t2_s2_sum) / t2_m_sum
-t3_ei_expected_kolme <- (t3_matriisi[2,5] * t3_matriisi[3,3]) / t3_matriisi[3,5]
-# t2_ei_selvinnyt_expected_ei_koiraa <- (t2_r2_sum * t2_s2_sum) / t2_m_sum
-t3_ei_expected_huono <- (t3_matriisi[2,5] * t3_matriisi[3,4]) / t3_matriisi[3,5]
+t3_pp_expected_viisi <- (t3_matriisi_valmis[1,5] * t3_matriisi_valmis[3,1]) / t3_matriisi_valmis[3,5]
+t3_pp_expected_nelja <- (t3_matriisi_valmis[1,5] * t3_matriisi_valmis[3,2]) / t3_matriisi_valmis[3,5]
+t3_pp_expected_kolme <- (t3_matriisi_valmis[1,5] * t3_matriisi_valmis[3,3]) / t3_matriisi_valmis[3,5]
+t3_pp_expected_huono <- (t3_matriisi_valmis[1,5] * t3_matriisi_valmis[3,4]) / t3_matriisi_valmis[3,5]
+t3_ei_expected_viisi <- (t3_matriisi_valmis[2,5] * t3_matriisi_valmis[3,1]) / t3_matriisi_valmis[3,5]
+t3_ei_expected_nelja <- (t3_matriisi_valmis[2,5] * t3_matriisi_valmis[3,2]) / t3_matriisi_valmis[3,5]
+t3_ei_expected_kolme <- (t3_matriisi_valmis[2,5] * t3_matriisi_valmis[3,3]) / t3_matriisi_valmis[3,5]
+t3_ei_expected_huono <- (t3_matriisi_valmis[2,5] * t3_matriisi_valmis[3,4]) / t3_matriisi_valmis[3,5]
 
-# 
 # # PP / VIISI
-# t2_s_k <- (((t2_matriisi[1,1] - t2_selvisi_expected_koira)^2) / t2_selvisi_expected_koira)
 t3_pp_viisi <- (((t3_matriisi[1,1] - t3_pp_expected_viisi)^2) / t3_pp_expected_viisi)
 # # PP / NELJA
-# t2_s_ek <- (((t2_matriisi[1,2] - t2_selvisi_expected_ei_koiraa)^2) / t2_selvisi_expected_ei_koiraa)
 t3_pp_nelja <- (((t3_matriisi[1,2] - t3_pp_expected_nelja)^2) / t3_pp_expected_nelja)
 # # PP / KOLME
 t3_pp_kolme <- (((t3_matriisi[1,3] - t3_pp_expected_kolme)^2) / t3_pp_expected_kolme)
@@ -290,20 +311,30 @@ t3_ei_kolme <- (((t3_matriisi[2,3] - t3_ei_expected_kolme)^2) / t3_ei_expected_k
 # # EI / HUONO
 t3_ei_huono<- (((t3_matriisi[2,4] - t3_ei_expected_huono)^2) / t3_ei_expected_huono)
 
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
+
+
+# ████████ ███████ 
+#    ██    ██      
+#    ██    ███████ 
+#    ██         ██ 
+#    ██    ███████ 
 
 # # CHI^2
-# t2_chi <- t2_s_k + t2_s_ek + t2_es_k + t2_es_ek
 t3_chi <- (t3_pp_viisi + t3_pp_nelja + t3_pp_kolme + t3_pp_huono) +
           (t3_ei_viisi + t3_ei_nelja + t3_ei_kolme + t3_ei_huono)
-# 
-# # CRIT
-# t2_alpha <- 0.05
+
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
+
+#   ██████ ██████  ██ ████████ 
+# ██       ██   ██ ██    ██    
+# ██       ██████  ██    ██    
+# ██       ██   ██ ██    ██    
+#   ██████ ██   ██ ██    ██    
+
 t3_alpha_viisi <- 0.05
 t3_alpha_yksi <- 0.01
-# t2_df <- (r-1) * (s-1)
 t3_df <- (2-1) * (4-1)
-# # qchisq(1-alpha,(r-1)*(s-1))
-# t2_crit <- qchisq(1-t2_alpha, t2_df)
 t3_crit_viisi <- qchisq(1 - t3_alpha_viisi, t3_df)
 t3_crit_yksi <- qchisq(1 - t3_alpha_yksi, t3_df)
 # 
@@ -312,18 +343,30 @@ t3_crit_yksi <- qchisq(1 - t3_alpha_yksi, t3_df)
 t3_rejected_ts_viisi <- ifelse(t3_chi >= t3_crit_viisi, TRUE, FALSE)
 t3_rejected_ts_yksi <- ifelse(t3_chi >= t3_crit_yksi, TRUE, FALSE)
 
-# 
-# # P - ARVO
-# t2_pvalue <- 1 - pchisq(t2_chi, t2_df)
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
+
+# ██████         █████  ██████  ██    ██  ██████  
+# ██   ██       ██   ██ ██   ██ ██    ██ ██    ██ 
+# ██████  █████ ███████ ██████  ██    ██ ██    ██ 
+# ██            ██   ██ ██   ██  ██  ██  ██    ██ 
+# ██            ██   ██ ██   ██   ████    ██████  
+
 t3_pvalue <- 1 - pchisq(t3_chi, t3_df)
 # # REJECT Pvalue < alpha
 # t2_rejected_pvalue <- ifelse(t2_pvalue < t2_alpha, TRUE, FALSE)
 t3_rejected_pvalue_viisi <- ifelse(t3_pvalue < t3_alpha_viisi, TRUE, FALSE)
 t3_rejected_pvalue_yksi <- ifelse(t3_pvalue < t3_alpha_yksi, TRUE, FALSE)
 # 
-# 
 
-# TEHTÄVÄ 4
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
+
+# ████████ ███████ ██   ██ ████████  █████  ██    ██  █████      ██   ██ 
+#    ██    ██      ██   ██    ██    ██   ██ ██    ██ ██   ██     ██   ██ 
+#    ██    █████   ███████    ██    ███████ ██    ██ ███████     ███████ 
+#    ██    ██      ██   ██    ██    ██   ██  ██  ██  ██   ██          ██ 
+#    ██    ███████ ██   ██    ██    ██   ██   ████   ██   ██          ██ 
+
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
 
 # Sivu 596, tehtävä 6) Erään alueen autoilijoista 84 prosenttia ei ole ollut osallisena
 # liikenneonnettomuudessa viimeisen vuoden aikana,
@@ -335,6 +378,35 @@ t3_rejected_pvalue_yksi <- ifelse(t3_pvalue < t3_alpha_yksi, TRUE, FALSE)
 # ainakin kahdessa onnetto- muudessa. Voidaanko tästä päätellä,
 # että lakimiesten yhteys liikenneonnettomuuksiin poikkeaa alueen muista autoilijoista?
                         #0  1     2   kolaria 
+
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
+
+#   ██████ ██   ██ ██ ███████  ██████      ████████ ███████ ███████ ████████ 
+# ██       ██   ██ ██ ██      ██    ██        ██    ██      ██         ██    
+# ██       ███████ ██ ███████ ██    ██        ██    █████   ███████    ██    
+# ██       ██   ██ ██      ██ ██ ▄▄  █        ██    ██           ██    ██    
+#   ██████ ██   ██ ██ ███████  ██████         ██    ███████ ███████    ██    
+#    ▀▀                                         
+
+#Tällä saa suoraan oikeat arvot.
+t4_otos <- c(308,66,26) # lakimiehet
+t4_osuudet <- c(0.84,0.14,0.02) # odotetut osuudet
+t4_chiqqqq <- chisq.test(t4_otos, p=t4_osuudet)
+t4_chiqqqq$p.value
+
+
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
+
+# ██████   █████  ████████  █████  
+# ██   ██ ██   ██    ██    ██   ██ 
+# ██   ██ ███████    ██    ███████ 
+# ██   ██ ██   ██    ██    ██   ██ 
+# ██████  ██   ██    ██    ██   ██ 
+
+# 0   1   2   kolaria
+t4_lakimiehet_observed <- c(308,66,26)
+t4_n <- 400
+
 t4_expected_probs <- c(0.84,0.14,0.02)
 t4_expected_freq <- lapply(t4_expected_probs, function(x) x*400)
 t4_vec_exp_frq <- unlist(t4_expected_freq)
@@ -351,16 +423,31 @@ t4_toka <- ((t4_lakimiehet_observed[2] - t4_expected_freq[[2]])^2 / t4_expected_
 t4_kolmas <- ((t4_lakimiehet_observed[3] - t4_expected_freq[[3]])^2 / t4_expected_freq[[3]])
 t4_summat <- t4_eka + t4_toka + t4_kolmas
 
-t4_otos <- c(308,66,26) # lakimiehet
-t4_osuudet <- c(0.84,0.14,0.02) # odotetut osuudet
-chisq.test(otos,p=osuudet)
-
-
 # H_0 lakimiesten yhteys liikenneonnettomuuksiin ei poikkea
 # H_1 lakimiesten yhteys liikenneonnettomuuksiin poikkeaa
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
+
+#   ██████ ██████  ██ ████████ 
+# ██       ██   ██ ██    ██    
+# ██       ██████  ██    ██    
+# ██       ██   ██ ██    ██    
+#   ██████ ██   ██ ██    ██    
+
+
 t4_crit <- qchisq(1-0.05,2)
 t4_crit_yksi <- qchisq(1-0.01,2)
+
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
+
+# ██████         █████  ██████  ██    ██  ██████  
+# ██   ██       ██   ██ ██   ██ ██    ██ ██    ██ 
+# ██████  █████ ███████ ██████  ██    ██ ██    ██ 
+# ██            ██   ██ ██   ██  ██  ██  ██    ██ 
+# ██            ██   ██ ██   ██   ████    ██████  
 t4_pvalue <- 1 - pchisq(t4_summat, (length(t4_otos)-1))
+t4_pvalue
 #0.000000000204
 
 # Hylätään H_0
+
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
