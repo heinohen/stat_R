@@ -1,35 +1,114 @@
-# TEHTÄVÄ 1
-# 
+
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
+
+
+# ████████ ███████ ██   ██ ████████  █████  ██    ██  █████       ██ 
+#    ██    ██      ██   ██    ██    ██   ██ ██    ██ ██   ██     ███ 
+#    ██    █████   ███████    ██    ███████ ██    ██ ███████      ██ 
+#    ██    ██      ██   ██    ██    ██   ██  ██  ██  ██   ██      ██ 
+#    ██    ███████ ██   ██    ██    ██   ██   ████   ██   ██      ██ 
+
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
+
 # Eteläisen Kalifornian alueella haluttiin tutkia,
 # esiintyykö maan- järistyksiä (voimakkuus vähintään 4.4 Richterin asteikolla mitattuna)
 # todennäköisemmin joinakin tiettyinä viikonpäivinä.
 # Tutkimusta varten kerättiin seuraavat tiedot koskien 1100 maanjäristystä:
-# Viikonpäivä ma ti ke to pe la su Järistystenlkm 
+# Viikonpäivä ma ti ke to pe la su järistysten lkm 
+
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
+
+# ██████   █████  ████████  █████  
+# ██   ██ ██   ██    ██    ██   ██ 
+# ██   ██ ███████    ██    ███████ 
+# ██   ██ ██   ██    ██    ██   ██ 
+# ██████  ██   ██    ██    ██   ██ 
+
 t1_P_i <- 1/7
 t1_jaristykset <- c(144, 170, 158, 172, 148, 152, 156)
 t1_probz <- c(t1_P_i, t1_P_i, t1_P_i, t1_P_i, t1_P_i, t1_P_i, t1_P_i)
 t1_alpha <- 0.05
 t1_n <- 1100
 
+# JOS EI TODENNÄKÖISYYDET SAMAT SAADAAN LASKETTUA
+
+# > otos <- c(92,20,4,84)
+# > osuudet <- c(0.41,0.09,0.04,0.46)
+# > chisq.test(otos,p=osuudet)
+
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
+
 # Testaa hypoteesia, jonka mukaan maanjäristys tapahtuu yhtä todennäköisesti
 # minä tahansa viikonpäivänä. Käytä viiden prosentin merkitsevyystasoa.
+
+# H_0 : tapahtuu jokaisena päivänä yhtä todennäköisesti
+# H_1 : tapahtuu jonain päivänä todennäköisemmin kuin muina
+
+#   ██████ ██   ██ ██ ███████  ██████      ████████ ███████ ███████ ████████ 
+# ██       ██   ██ ██ ██      ██    ██        ██    ██      ██         ██    
+# ██       ███████ ██ ███████ ██    ██        ██    █████   ███████    ██    
+# ██       ██   ██ ██      ██ ██ ▄▄ ██        ██    ██           ██    ██    
+#   ██████ ██   ██ ██ ███████  ██████         ██    ███████ ███████    ██    
+#    ▀▀                                         
+ 
+#Tällä saa suoraan oikeat arvot.
 t1_chisq <- chisq.test(t1_jaristykset)
-t1_chisq
+
+
+# Odotettu frekvenssi kaikille päiville, sama tn niin yksi arvo riittää
+t1_e_i <- signif((t1_n * t1_P_i),5)
+
+
+
+# ████████ ███████ 
+#    ██    ██      
+#    ██    ███████ 
+#    ██         ██ 
+#    ██    ███████ 
+
+# Odotettu frekvenssi kaikille päiville, sama tn niin yksi arvo riittää
 t1_e_i <- signif((t1_n * t1_P_i),5)
 
 # (Ni - ei)^2 / ei
 t1_per_paiva <- lapply(t1_jaristykset, function(x) (x - t1_e_i)^2 / t1_e_i)
-t1_per_paiva
 t1_ts <- sum(unlist(t1_per_paiva))
+t1_ts
+
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
+
+
+#   ██████ ██████  ██ ████████ 
+# ██       ██   ██ ██    ██    
+# ██       ██████  ██    ██    
+# ██       ██   ██ ██    ██    
+#   ██████ ██   ██ ██    ██    
+
 
 # crit qchisq(Pi, k-1)
 t1_crit <- qchisq(1-(t1_alpha), length(t1_jaristykset)-1)
 t1_rejected_ts <- ifelse(t1_ts >= t1_crit, TRUE, FALSE)
 
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
+
+# ██████         █████  ██████  ██    ██  ██████  
+# ██   ██       ██   ██ ██   ██ ██    ██ ██    ██ 
+# ██████  █████ ███████ ██████  ██    ██ ██    ██ 
+# ██            ██   ██ ██   ██  ██  ██  ██    ██ 
+# ██            ██   ██ ██   ██   ████    ██████  
+
 # pvalue P(X^2_k-1 >= TS)
 t1_pvalue <- 1 - pchisq(t1_ts, length(t1_jaristykset)-1)
 t1_rejected_pvalue <- ifelse(t1_ts < t1_alpha, TRUE, FALSE)
 
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
+
+
+
+# ████████ ███████ ██   ██ ████████  █████  ██    ██  █████      ██████  
+#    ██    ██      ██   ██    ██    ██   ██ ██    ██ ██   ██          ██ 
+#    ██    █████   ███████    ██    ███████ ██    ██ ███████      █████  
+#    ██    ██      ██   ██    ██    ██   ██  ██  ██  ██   ██     ██      
+#    ██    ███████ ██   ██    ██    ██   ██   ████   ██   ██     ███████ 
 
 # TEHTÄVÄ 2
 
@@ -46,22 +125,66 @@ t1_rejected_pvalue <- ifelse(t1_ts < t1_alpha, TRUE, FALSE)
 # Kerro huolellisesti mitä nollahypoteesia testaat
 # (kerro myös vastahypoteesi) ja mitä testisuuretta käytät.
 
-#b_matriisi <- matrix(c(4,10,6,8,6,6), nrow = 3, ncol = 2, byrow = FALSE)
+# H_0: Selvityminen on riippumatonta koiran omistamisen kanssa
+# H_1: Selviytyminen on riippuvaista koiran omistamisen kanssa
 
-t2_matriisi <- matrix(c(28,44,8,15), nrow=2, ncol=2,byrow = TRUE)
-t2_matriisi[1,1] # <--- 28
+# .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
 
-#my_matrix <- cbind(my_matrix, c(2, 7, 7, 8))
-t2_r1_sum <- sum(t2_matriisi[1,])
-t2_r2_sum <- sum(t2_matriisi[2,])
-t2_s1_sum <- sum(t2_matriisi[,1])
-t2_s2_sum <- sum(t2_matriisi[,2])
+# ██████   █████  ████████  █████  
+# ██   ██ ██   ██    ██    ██   ██ 
+# ██   ██ ███████    ██    ███████ 
+# ██   ██ ██   ██    ██    ██   ██ 
+# ██████  ██   ██    ██    ██   ██ 
 
-t2_m_sum <- t2_matriisi[1,1] + t2_matriisi[1,2] + t2_matriisi[2,1] + t2_matriisi[2,2]
+t2_mat <- matrix(c(28,8,44,15), ncol=2,byrow = TRUE)
+t2_mat
+#       [,1] [,2]
+# [1,]   28   44 
+# [2,]    8   15 
 
-t2_matriisi <- cbind(t2_matriisi, c(t2_r1_sum, t2_r2_sum))
+
+#   ██████ ██   ██ ██ ███████  ██████      ████████ ███████ ███████ ████████ 
+# ██       ██   ██ ██ ██      ██    ██        ██    ██      ██         ██    
+# ██       ███████ ██ ███████ ██    ██        ██    █████   ███████    ██    
+# ██       ██   ██ ██      ██ ██ ▄▄ ██        ██    ██           ██    ██    
+#   ██████ ██   ██ ██ ███████  ██████         ██    ███████ ███████    ██    
+#    ▀▀                                         
+
+# Tällä saa suoraan oikeat arvot.
+t2_chisq <- chisq.test(t2_mat, corr = F)
+t2_chisq$p.value
+
+# Tällä saa tarkastettua
+
+# Lasketaan odotetut frekvenssit
+# (apply(O, 1, sum) %*% t(apply(O,2,sum))) / sum(O) > # Lasketaan testisuure
+t2_matriisilasku  <- (apply(t2_mat, 1, sum) %*% t(apply(t2_mat,2,sum))) / sum(t2_mat)
+# > X <- sum((O - E)ˆ2 / E)
+t2_matriisitulos <- sum(( t2_mat - t2_matriisilasku)^2 / t2_matriisilasku)
+#>X
+#[1] 35.83937
+#> pchisq(B, df=length(row)-1, lower=F)
+t2_chisq_laskettu <- pchisq(t2_matriisitulos, df = length(t2_mat[2,]) - 1, lower.tail = F)
+
+# Tai sitten käsin
+
+# rivisummat
+t2_r1_sum <- sum(t2_mat[1,])
+t2_r2_sum <- sum(t2_mat[2,])
+# sarakesummat
+t2_s1_sum <- sum(t2_mat[,1])
+t2_s2_sum <- sum(t2_mat[,2])
+# kaikkien summa
+t2_m_sum <- t2_mat[1,1] + t2_mat[1,2] + t2_mat[2,1] + t2_mat[2,2]
+# lisätään sarake jossa rivisummat
+t2_matriisi <- cbind(t2_mat, c(t2_r1_sum, t2_r2_sum))
+# lisätään rivi jossa sarakesummat
 t2_matriisi <- rbind(t2_matriisi, c(t2_s1_sum, t2_s2_sum, t2_m_sum))
 
+#       [,1] [,2] [,3]
+# [1,]   28   44   72
+# [2,]    8   15   23
+# [3,]   36   59   95
 
 # selvinneet ----> rivi 1 Eij = (n_r * n_s) / n
 #ODOTUSARVOT
