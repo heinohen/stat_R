@@ -471,3 +471,137 @@ t4_ennustusLM <- predict(t4_fitted, newdata = t4_ennustus_df, interval = 'pred')
 t4_ennustusLM
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 summary(t4_fitted)
+
+
+
+
+### TENTTI
+
+# tentti_data <- data.frame(x=c(97, 82, 90, 73, 86, 64, 53, 93, 36, 77),
+#                           y=c(152, 100, 117, 86, 133, 93, 88, 131, 50, 110))
+# 
+# tentti_fitted <- lm(y ~ x, data = tentti_data)
+# summary(tentti_fitted)
+# 
+
+# 
+# # PNS-estimaatit
+# # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# # alpha hattu
+# t2_lm_a <- summary(t2_fitted)$coefficients[1,1]
+# # # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# # # beta hattu
+# # t2_lm_B <- summary(t2_fitted)$coefficients[2,1]
+# tentti_b <- summary(tentti_fitted)$coefficients[2,1]
+
+
+# # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 
+# # ████████ ███████ ██   ██ ████████  █████  ██    ██  █████      ██   ██ 
+# #    ██    ██      ██   ██    ██    ██   ██ ██    ██ ██   ██     ██   ██ 
+# #    ██    █████   ███████    ██    ███████ ██    ██ ███████     ███████ 
+# #    ██    ██      ██   ██    ██    ██   ██  ██  ██  ██   ██          ██ 
+# #    ██    ███████ ██   ██    ██    ██   ██   ████   ██   ██          ██ 
+# # 
+# 
+# # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# # Puuvillan osuus 13 15 18 20 18 20 17 18
+# # Kuivumisaika 2.5 2.2 2.5 2.4 3.2 3.3 4.1 4.3
+# # Vetolujuus 212 221 230 219 245 238 243 242
+# # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 
+# 
+# # ██████   █████  ████████  █████  
+# # ██   ██ ██   ██    ██    ██   ██ 
+# # ██   ██ ███████    ██    ███████ 
+# # ██   ██ ██   ██    ██    ██   ██ 
+# # ██████  ██   ██    ██    ██   ██ 
+# 
+# t4_data <- data.frame(puuvilla = c(13,15,18,20,18,20,17,18),
+#                       kuivumisaika = c(2.5,2.2,2.5,2.4,3.2,3.3,4.1,4.3),
+#                       vetolujuus = c(212,221,230,219,245,238,243,242))
+# # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 
+# # ██      ██ ███    ██ ███████  █████   █████  ██████  ██ ███    ███  █████  ██      ██      ██ 
+# # ██      ██ ████   ██ ██      ██   ██ ██   ██ ██   ██ ██ ████  ████ ██   ██ ██      ██      ██ 
+# # ██      ██ ██ ██  ██ █████   ███████ ███████ ██████  ██ ██ ████ ██ ███████ ██      ██      ██ 
+# # ██      ██ ██  ██ ██ ██      ██   ██ ██   ██ ██   ██ ██ ██  ██  ██ ██   ██ ██      ██      ██ 
+# # ███████ ██ ██   ████ ███████ ██   ██ ██   ██ ██   ██ ██ ██      ██ ██   ██ ███████ ███████ ██ 
+# 
+# # usea muuttuja
+# 
+# t4_fitted <- lm(vetolujuus ~ puuvilla+kuivumisaika, data = t4_data)
+# summary(t4_fitted)
+# # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 
+# # 1. Sovita aineistoon usean selittäjän lineaarinen regressiomalli, jossa vetolujuus on selitettävä
+# # muuttuja ja puuvillan osuus ja kuivumisaika selittävät muuttujat.
+# # 2. Laske ennuste kuidun vetolujuudelle, kun kyseinen kuitu on 22% puuvillaa ja sen kuivumisaika
+# # on 3.5.
+# # 
+# # matrix()
+# # > matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow=3, ncol=3, byrow=TRUE)
+# # [,1] [,2] [,3]
+# # [1,] 1 2 3
+# # [2,] 4 5 6
+# # [3,] 7 8 9
+# 
+# #solve( t(X) %*% X )  %*% t(X) %*% Y
+# # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# t4_x_mat <- matrix(c(1,13,2.5,
+#                      1,15,2.2,
+#                      1,18,2.5,
+#                      1,20,2.4,
+#                      1,18,3.2,
+#                      1,20,3.3,
+#                      1,17,4.1,
+#                      1,18,4.3),
+#                    nrow=8, ncol=3, byrow=TRUE)
+# t4_y_mat <- matrix(c(212,221,230,219,245,238,243,242),ncol=1)
+# t4_beta_hats <- solve( t(t4_x_mat) %*% t4_x_mat) %*% t(t4_x_mat) %*% t4_y_mat
+# # Tässä 3x1 matriisissa on arvot
+# # 1 == Beta hattu 0
+# # 2 == Beta hattu 1
+# # 3 == Beta hattu 2
+# t4_beta_hats
+# # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 
+# # huom: samat arvot saa lm:n summarystä coefficients eka sarake[1,]
+# # > summary(t4_fitted)$coefficients[,1]
+# # (Intercept)     puuvilla kuivumisaika 
+# # 168.164898     1.599005    11.527312 
+# # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 
+# # Ennustettavat
+# t4_e_pv <- 22
+# t4_e_ka <- 3.5
+# 
+# # Ennustettava arvo ja sen lasku
+# # BETA_0  + BETA_1 + BETA_2 * ennustettava keskiarvo
+# 
+# t4_e_lasku <- t4_beta_hats[1,1]+t4_beta_hats[2,1]*t4_e_pv+t4_beta_hats[3,1]*t4_e_ka
+# t4_e_lasku
+# 
+# 
+# # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# t4_ennustus_df <- data.frame(puuvilla = 22,
+#                              kuivumisaika = 3.5)
+# t4_ennustusLM <- predict(t4_fitted, newdata = t4_ennustus_df, interval = 'pred')
+# t4_ennustusLM
+# # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# summary(t4_fitted)
+
+# tentti11_lm <- lm(Ozone ~ Solar.R + Wind + Temp, data = airquality)
+# tentti11_lm
+# summary(tentti11_lm)
+# tentti11_arvot <- data.frame(Solar.R = 238, Wind = 13, Temp = 71)
+# tentti11_ennustus <- predict(tentti11_lm, newdata = tentti11_arvot, interval = 'pred')
+# tentti11_ennustus
+
+# tentti12_data <- as.data.frame(state.x77)
+# tentti12_data
+# 
+# tentti12_lm <- lm(tentti12_data$Murder ~ tentti12_data$Illiteracy)
+# plot(tentti12_data$Illiteracy, tentti12_data$Murder)
+# abline(tentti12_lm)
+# summary(tentti12_lm)

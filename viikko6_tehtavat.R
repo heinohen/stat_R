@@ -348,3 +348,25 @@ t5_runs <- runs(t5_test)
 # e_ones <- sum(e_r$lengths[e_r$values == 1])
 # # P-arvo
 # 2 * pruns(e_runs, e_zeroes, e_ones)
+
+## TENTTI
+
+# ##### SAMA TESTI vvvvvvv TÄMÄ TOIMII #######
+# t2_data_testi <- data.frame(sample = c(1,7,-6,5,-3,6,6,2,-1,0,2,3,4,-2),
+#                             group = factor(c(1,1,1,1,1,1,1,2,2,2,2,2,2,2),
+#                                            labels=c('vitA','vitB')))
+
+tentti16_data_testi <- data.frame(sample = c(195,201,196,198,191,208,199,200,202),
+                                  group = factor(c(1,1,1,1,2,2,2,2,2),
+                                  labels=c('Lajike A', 'Lajike B')))
+tentti16_data_testi
+tentti16_pairwise <- pairwise.wilcox.test(tentti16_data_testi$sample, tentti16_data_testi$group)
+summary(tentti16_pairwise)
+tentti16_pairwise$p.value
+
+# t2_data_testi
+# t2_pairwise <- pairwise.wilcox.test(t2_data_testi$sample, t2_data_testi$group)
+# t2_pairwise$p.value
+# 
+# 
+# 

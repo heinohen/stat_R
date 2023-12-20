@@ -176,3 +176,20 @@ t5_c_ts_alakerta_sqrt <- sqrt(t5_c_ts_alakerta)
 t5_c_ts <- t5_c_ts_ylakerta / t5_c_ts_alakerta_sqrt
 t5_c_pvalue <- 2 * pnorm(t5_c_ts)
 t5_c_rejected <- ifelse(t5_c_pvalue <= t5_zeta, TRUE, FALSE)
+
+
+t6_n <- 7
+t6_m <- 8
+t6_xbar <- 30.7
+t6_ybar <- 35.1
+t6_sp2 <- 12.9
+
+# t5_ts_ylakerta <- t5_laani1_ka - t5_laani2_ka
+t6_ylakerta <- t6_xbar - t6_ybar
+# t5_ts_alakerta_eka <- t5_Sp2 * ((1 / t5_laani1_n) + (1 / t5_laani2_m))
+t6_alakerta_eka <- t6_sp2 * (( 1 / t6_n ) + ( 1 / t6_m))
+# t5_ts_alakerta_sqrt <- sqrt(t5_ts_alakerta_eka)
+t6_alakerta <- sqrt(t6_alakerta_eka)
+# t5_ts <- t5_ts_ylakerta / t5_ts_alakerta_sqrt
+t6_ts <- t6_ylakerta / t6_alakerta
+t6_pvalue <- 2 * pnorm(t6_ts)

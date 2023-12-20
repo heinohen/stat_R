@@ -245,8 +245,34 @@ t5_rejected <- ifelse(t5_ts >= t5_crit, TRUE, FALSE)
 t5_pvalue <- pf(t5_ts, (t5_m - 1), t5_m * (t5_n -1))
 
 
+### TENTTI
+
+## banaani / lannaoite
+
+tehtava_N <- 12
+lannoite <- 3
+tehtava_SSr <- 3.4
+tehtava_SSc <- 1.3
+tehtava_SSe <- 1.2
 
 
+# # TS COL
+# t4_ts_col <- (t4_SSr / ( t4_m - 1)) / (t4_SSe / t4_N)
+lannoite_ts <- (tehtava_SSc / (lannoite - 1)) / (tehtava_SSe / tehtava_N)
+# # F_(n-1, N, alpha) COL
+# # VIISI
+# t4_crit_col <- qf((1- t4_viis_alpha), (t4_m -1), t4_N)
+# # YKSI
+# t4_crit_col_yksi <- qf((1 - t4_yksi_alpha), (t4_n -1), t4_N)
+# # REJECT ?
+# t4_rejected_col <- ifelse(t4_ts_col >= t4_crit_col, TRUE, FALSE)
+# t4_rejected_col_yksi <- ifelse(t4_ts_col>= t4_crit_col_yksi, TRUE, FALSE)
+# # P-VALUE COL TS, n-1, N, lowertail FALSE
+# t4_pvalue_col <- pf(t4_ts_col, (t4_n -1) , t4_N, lower.tail = FALSE)
+# t4_rejected_col_pvalue <- ifelse(t4_pvalue_col<t4_viis_alpha, TRUE, FALSE)
+# t4_rejected_col_pvalue_yksi <- ifelse(t4_pvalue_col<t4_yksi_alpha, TRUE, FALSE)
 
+
+pf(lannoite_ts,2,12, lower.tail = FALSE)
 
 

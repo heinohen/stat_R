@@ -451,3 +451,42 @@ t4_pvalue
 # Hylätään H_0
 
 # .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
+
+
+
+
+## TENTTI
+
+
+# 
+# # ██████   █████  ████████  █████  
+# # ██   ██ ██   ██    ██    ██   ██ 
+# # ██   ██ ███████    ██    ███████ 
+# # ██   ██ ██   ██    ██    ██   ██ 
+# # ██████  ██   ██    ██    ██   ██ 
+# 
+# t2_mat <- matrix(c(28,8,44,15), ncol=2,byrow = TRUE)
+# t2_mat
+
+tentti14_matriisi <- matrix(c(127,156,24,29,35,29),ncol=3)
+
+rownames(tentti14_matriisi) <- c("aamuvirkku", "ei-aamuvirkku")
+colnames(tentti14_matriisi) <- c("kylki", "vatsa", "selka")
+tentti14_matriisi
+sum(tentti14_matriisi[1,])
+sum(tentti14_matriisi[2,])
+
+# # .:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:._.:*~*:.
+# 
+# #   ██████ ██   ██ ██ ███████  ██████      ████████ ███████ ███████ ████████ 
+# # ██       ██   ██ ██ ██      ██    ██        ██    ██      ██         ██    
+# # ██       ███████ ██ ███████ ██    ██        ██    █████   ███████    ██    
+# # ██       ██   ██ ██      ██ ██ ▄▄ ██        ██    ██           ██    ██    
+# #   ██████ ██   ██ ██ ███████  ██████         ██    ███████ ███████    ██    
+# #    ▀▀                                         
+# 
+# # Tällä saa suoraan oikeat arvot.
+# t2_chisq <- chisq.test(t2_mat, corr = F)
+tentti14_chisq <- chisq.test(tentti14_matriisi, corr = F)
+# t2_chisq$p.value
+tentti14_chisq$p.value
