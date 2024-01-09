@@ -13,7 +13,7 @@ t2_arvosanat <- c(1, 0, 0, 0, 5, 2, 2, 0, 1, 1, 0, 0, 2, 0, 2, 3, 0, 0, 1, 2, 1,
 # Muodosta näistä frekvenssijakauma
 
 t2_frekvenssitaulu <- table(t2_arvosanat)
-
+t2_frekvenssitaulu
 #ja piirrä vastaava pylväskuvio.
 barplot(t2_frekvenssitaulu)
 
@@ -44,6 +44,7 @@ median(t3_arvosanat)
 
 #kvartaalit
 quantile(t3_arvosanat)
+quantile(t3_arvosanat, type=2)
 
 x <- c(3,1,4,0,1,2,6,6)
 y <- c(1:8)
